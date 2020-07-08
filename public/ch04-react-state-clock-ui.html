@@ -15,18 +15,19 @@
     <script type="text/babel">
       var divReact = document.getElementById('id-div-react');
 
-      function ClockReactComp () {
-        return <p>Hello, now is {new Date().toLocaleTimeString()}.</p>;
+      function ClockReactComp (props) {
+        return <p>Hello, now is {props.date.toLocaleTimeString()}.</p>;
       }
 
-      const reactSpan = (
-        <span>
-          <h3>React State - Clock UI Wrapper</h3>
-          <ClockReactComp />
-        </span>
-      )
+      function autoClock () {
+        ReactDOM.render(
+          <span>
+            <h3>React State - Clock UI Wrapper Update</h3>
+            <ClockReactComp date={new Date()} />
+          </span>, divReact);
+      }
 
-      ReactDOM.render(reactSpan, divReact);
+      setInterval(autoClock, 1000);
     </script>
   </body>
 
