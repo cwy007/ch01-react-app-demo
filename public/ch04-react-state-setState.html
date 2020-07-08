@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React JSX Intro </title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/react/16.13.1/umd/react.development.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/react-dom/16.13.1/umd/react-dom.development.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/babel-standalone/7.0.0-beta.3/babel.min.js"></script>
+  </head>
+
+  <body>
+    <div id="id-div-react"></div>
+    <script type="text/babel">
+      var divReact = document.getElementById('id-div-react');
+
+      class CountReactComp extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {count: 0};
+        }
+
+        componentDidMount() {
+          this.timerId = setInterval(
+            () => this.count(), // 这里要使用箭头函数，自动绑定 this
+            1000
+          );
+        }
+
+        componentWillUnmount() {
+          clearInterval(this.timerId);
+        }
+
+        count() {
+          this.setState((prevState, props) => ({
+            count: prevState.count + props.increment
+          }));
+        }
+
+        render() {
+          return (
+            <span>
+              <h3>React State - setState()</h3>
+              <p>Hello, now is {this.state.count}.</p>
+            </span>
+          );
+        }
+      }
+
+      CountReactComp.defaultProps = {
+        increment: 1
+      };
+
+      ReactDOM.render(<CountReactComp />, divReact);
+    </script>
+  </body>
+
+</html>
