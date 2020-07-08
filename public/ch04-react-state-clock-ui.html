@@ -15,19 +15,40 @@
     <script type="text/babel">
       var divReact = document.getElementById('id-div-react');
 
-      function ClockReactComp (props) {
-        return <p>Hello, now is {props.date.toLocaleTimeString()}.</p>;
+      class ClockReactComp extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {date: new Date()};
+        }
+
+        componentDidMount() {
+          this.timerId = setInterval(
+            () => this.tick(), // 这里要使用箭头函数，自动绑定 this
+            1000
+          );
+        }
+
+        componentWillUnmount() {
+          clearInterval(this.timerId);
+        }
+
+        tick() {
+          this.setState({
+            date: new Date()
+          });
+        }
+
+        render() {
+          return (
+            <span>
+              <h3>React State - Clock Class Lifecycle</h3>
+              <p>Hello, now is {this.state.date.toLocaleTimeString()}.</p>
+            </span>
+          );
+        }
       }
 
-      function autoClock () {
-        ReactDOM.render(
-          <span>
-            <h3>React State - Clock UI Wrapper Update</h3>
-            <ClockReactComp date={new Date()} />
-          </span>, divReact);
-      }
-
-      setInterval(autoClock, 1000);
+      ReactDOM.render(<ClockReactComp />, divReact);
     </script>
   </body>
 
