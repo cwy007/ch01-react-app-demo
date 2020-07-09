@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Event - Water Temperature</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/react/16.13.1/umd/react.development.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/react-dom/16.13.1/umd/react-dom.development.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/babel-standalone/7.0.0-beta.3/babel.min.js"></script>
+</head>
+<body>
+  <div id="id-div-react"></div>
+  <script type="text/babel">
+    var divReact = document.getElementById('id-div-react');
+
+    function WaterTempLevel(props) {
+      if (props.wlevel <= 0) {
+        return <p>This is ice water.</p>;
+      } else if ((props.wlevel > 0) && (props.wlevel <= 20)) {
+        return <p>This is cold water.</p>;
+      } else if ((props.wlevel > 20) && (props.wlevel <= 38)) {
+        return <p>This is warm water.</p>;
+      } else if ((props.wlevel > 30) && (props.wlevel < 100)) {
+        return <p>This is hot water.</p>;
+      } else {
+        return <p>This is ... water.</p>;
+      }
+    }
+
+    class WaterTempComp extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          temperature: ""
+        };
+
+        this.inputTextFocus = this.inputTextFocus.bind(this);
+        this.inputTextChange = this.inputTextChange.bind(this);
+        this.inputTextBlur = this.inputTextBlur.bind(this);
+      }
+
+      inputTextFocus(e) {
+        e.preventDefault();
+        console.log("input text focus.");
+        this.setState({
+          temperature: e.target.value
+        });
+      }
+
+      inputTextChange(e) {
+        e.preventDefault();
+        console.log("input text changed.");
+        this.setState({
+          temperature: e.target.value
+        });
+      }
+
+      inputTextBlur(e) {
+        e.preventDefault();
+        console.log("input text blur.");
+        this.setState({
+          temperature: e.target.value
+        });
+      }
+
+      render() {
+        const temperature = this.state.temperature;
+        return (
+          <fieldset>
+            <legend>Enter temperature to test:</legend>
+            <input type="text"
+                    value={temperature}
+                    onFocus={this.inputTextFocus}
+                    onChange={this.inputTextChange}
+                    onBlur={this.inputTextBlur} />
+            <WaterTempLevel wlevel={parseFloat(temperature)} />
+          </fieldset>
+        );
+      }
+    }
+
+    const reactSpan = (
+      <span>
+        <h3>React Event - Water Temperature</h3>
+        <WaterTempComp />
+      </span>
+    );
+
+    ReactDOM.render(reactSpan, divReact);
+  </script>
+</body>
+</html>
