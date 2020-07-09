@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Event - Water Temperature</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/react/16.13.1/umd/react.development.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/react-dom/16.13.1/umd/react-dom.development.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/babel-standalone/7.0.0-beta.3/babel.min.js"></script>
+</head>
+<body>
+  <div id="id-div-react"></div>
+  <script type="text/babel">
+    var divReact = document.getElementById('id-div-react');
+
+    function Banner (props) {
+      if (!props.isBanner) {
+        return null;
+      }
+
+      return (
+        <div className="banner">
+          Banner div - show/hide by click the btn below.
+        </div>
+      );
+    }
+
+    class BannerComp extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {showBanner: true};
+        this.handleToggleClick = this.handleToggleClick.bind(this);
+      }
+
+      handleToggleClick() {
+        this.setState(prevState => ({
+          showBanner: !prevState.showBanner
+        }));
+      }
+
+      render() {
+        return (
+          <div>
+            <Banner isBanner={this.state.showBanner} />
+            <button onClick={this.handleToggleClick}>
+              {this.state.showBanner ? 'Hide' : 'Show'}
+            </button>
+          </div>
+        );
+      }
+    }
+
+    const reactSpan = (
+      <span>
+        <h3>React Render - Prevent Render</h3>
+        <BannerComp />
+      </span>
+    );
+
+    ReactDOM.render(reactSpan, divReact);
+  </script>
+</body>
+</html>
