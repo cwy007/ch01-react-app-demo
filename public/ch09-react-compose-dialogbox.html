@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Event - Water Temperature</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/react/16.13.1/umd/react.development.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/react-dom/16.13.1/umd/react-dom.development.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/babel-standalone/7.0.0-beta.3/babel.min.js"></script>
+</head>
+<body>
+  <div id="id-div-react"></div>
+  <script type="text/babel">
+    var divReact = document.getElementById('id-div-react');
+
+    function MyDialogBox(props) {
+      return (
+        <div className={'dialogBorder-' + props.color}>
+          {props.children}
+        </div>
+      );
+    }
+
+    function WelcomeDialog() {
+      return (
+        <MyDialogBox color="gray">
+          <h3 className="dialog-title">
+            Welcome
+          </h3>
+          <p className="dialog-message">
+            Thanks for your visiting our website!
+          </p>
+        </MyDialogBox>
+      );
+    }
+
+    function InfoDialog() {
+      return (
+        <MyDialogBox color="gray">
+          <h3 className="dialog-title">
+            Info
+          </h3>
+          <p className="dialog-info">
+            Attention: Pls read this information in detail!
+          </p>
+        </MyDialogBox>
+      );
+    }
+
+    function MyDialog(props) {
+      const dType = props.dlgType;
+      if (dType) {
+        console.log("Dialog Type: WelcomeDialog.");
+        return <WelcomeDialog />;
+      } else {
+        console.log("Dialog Type: InfoDialog.");
+        return <InfoDialog />;
+      }
+    }
+
+    ReactDOM.render(<MyDialog dlgType={true} />, divReact);
+  </script>
+</body>
+</html>
