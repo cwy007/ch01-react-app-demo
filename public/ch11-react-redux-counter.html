@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Event - Water Temperature</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/react/16.13.1/umd/react.development.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/react-dom/16.13.1/umd/react-dom.development.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/redux/4.0.5/redux.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/babel-standalone/7.0.0-beta.3/babel.min.js"></script>
+</head>
+<body>
+  <div id="id-div-react">
+    <p>
+      Clicked: <span id="id-count">0</span> times. <br><br>
+      <button id="increment">+1</button>
+      <button id="decrement">-1</button>
+      <button id="incrementIfOdd">+1（当前 times 为奇数时）</button>
+      <button id="incrementAsync">+1（异步操作）</button>
+    </p>
+  </div>
+  <script type="text/babel">
+    var divReact = document.getElementById('id-div-react');
+
+    // define Reducer
+    function reducerCounter(state, action) {
+      if (typeof state === 'undefined') {
+        return 0;
+      }
+
+      switch (action.type) {
+        case 'INCREMENT':
+          return state + 1;
+        case 'DECREMENT':
+          return state - 1;
+        default:
+          return state;
+      }
+    }
+
+    // Create Store
+    var store = Redux.createStore(reducerCounter);
+    var vCount = document.getElementById('id-count');
+
+    // render
+    function render() {
+      vCount.innerHTML = store.getState().toString();
+    }
+    render();
+    store.subscribe(render); // subscribe
+
+    // dispatch
+    document.getElementById('increment').addEventListener('click', function() {
+      store.dispatch({type: 'INCREMENT'})
+    });
+    document.getElementById('decrement').addEventListener('click', function() {
+      store.dispatch({type: 'DECREMENT'})
+    });
+    document.getElementById('incrementIfOdd').addEventListener('click', function() {
+      if (store.getState() % 2 !== 0) {
+        store.dispatch({type: 'INCREMENT'})
+      }
+    });
+    document.getElementById('incrementAsync').addEventListener('click', function() {
+      setTimeout(function() {
+        store.dispatch({type: 'INCREMENT'})
+      }, 1000)
+    });
+  </script>
+</body>
+</html>
